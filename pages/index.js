@@ -10,27 +10,16 @@ const HomePage = ({ posts }) => {
 	return (
 		<div>
 			<h1>Welcome to my blog!</h1>
-			<h2 style={{ color: 'palevioletred' }}>Archives:</h2>
+			<h2>Archives:</h2>
 			<ul>
 				{posts.map((post) => {
 					const frontmatter = post.data
 					return (
-						<li
-							key={frontmatter.title}
-							style={{
-								listStyleType: 'none',
-								paddingTop: 25,
-								marginBottom: 75,
-							}}
-						>
+						<li key={frontmatter.title}>
 							<article>
 								<dl>
 									<dt>Published on</dt>
-									<dd
-										style={{
-											margin: 0,
-										}}
-									>
+									<dd>
 										<time dateTime={frontmatter.date}>
 											{postDateTemplate.render(new Date(frontmatter.date))}
 										</time>

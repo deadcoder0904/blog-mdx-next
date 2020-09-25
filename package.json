@@ -11,6 +11,7 @@
   "dependencies": {
     "@mdx-js/loader": "^1.6.17",
     "@mdx-js/react": "^1.6.18",
+    "@mdx-js/runtime": "^1.6.18",
     "@next/mdx": "^9.5.3",
     "fast-glob": "^3.2.4",
     "gray-matter": "^4.0.2",
