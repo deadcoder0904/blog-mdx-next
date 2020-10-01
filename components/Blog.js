@@ -1,65 +1,63 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { MDXProvider } from '@mdx-js/react'
-import MDX from '@mdx-js/runtime'
-import { renderToStaticMarkup } from 'react-dom/server'
+import tinytime from 'tinytime'
 
-import { BLOG_PATH, blogFilePaths } from '@/utils/mdxUtils'
 import { Image } from '@/components/Image'
 
 const MDXComponents = { Image }
 
-const Blog = ({ source, frontMatter }) => {
+const postDateTemplate = tinytime('{MMMM} {DD}, {YYYY}')
+
+const Blog = (props) => {
+	const { posts, meta, children } = props
+	const router = useRouter()
+	const postIndex = posts.findIndex((post) => post.slug === router.pathname.substr(6))
+	const previous = posts[postIndex + 1]
+	const next = posts[postIndex - 1]
+
 	return (
 		<div>
-			<h1>{frontMatter.title}</h1>
+			<h1>{meta.title}</h1>
+			<h2>Author: {meta.author}</h2>
+			<h3>Date: {postDateTemplate.render(new Date(meta.date))}</h3>
+			<strong>
+				<i>tags: {meta.tags.join(', ')}</i>
+			</strong>
 			<MDXProvider components={MDXComponents}>
-				<div
-					dangerouslySetInnerHTML={{
-						__html: source,
-					}}
-				/>
+				{children}
 			</MDXProvider>
+			{(next || previous) && (
+				<div>
+					{next && (
+						<div>
+							<h2>Next Article</h2>
+							<div>
+								<Link href={next.slug}>
+									<a>{next.title}</a>
+								</Link>
+							</div>
+						</div>
+					)}
+					{previous && (
+						<div>
+							<h2>Previous Article</h2>
+							<div>
+								<Link href={previous.slug}>
+									<a>{previous.title}</a>
+								</Link>
+							</div>
+						</div>
+					)}
+				</div>
+			)}
+			<div className="pt-8">
+				<Link href="/">
+					<a>&larr; Back to the blog</a>
+				</Link>
+			</div>
 		</div>
 	)
-}
-
-export async function getStaticPaths() {
-	const paths = blogFilePaths.map((path) => {
-		const split = path.split('/')
-		const slug = split[split.length - 2]
-		return {
-			params: {
-				slug,
-			},
-		}
-	})
-
-	return {
-		paths,
-		fallback: false,
-	}
-}
-
-export const getStaticProps = async ({ params }) => {
-	const { slug } = params
-	const blogFilePath = path.join(BLOG_PATH, `/blog/${slug}/index.mdx`)
-
-	const source = fs.readFileSync(blogFilePath)
-	const { content, data } = matter(source)
-	const mdx = renderToStaticMarkup(<MDX>{content}</MDX>)
-
-	if (!blogFilePath) {
-		console.warn('No MDX file found for slug')
-	}
-
-	return {
-		props: {
-			source: mdx,
-			frontMatter: data,
-		},
-	}
 }
 
 export default Blog

@@ -1,19 +1,20 @@
-import fs from 'fs'
 import Link from 'next/link'
 import tinytime from 'tinytime'
-import matter from 'gray-matter'
-import { blogFilePaths } from '../utils/mdxUtils'
+
+import { getAllBlogPreviews } from '@/utils/blog/getAllBlogPreviews'
+
+const posts = getAllBlogPreviews()
 
 const postDateTemplate = tinytime('{MMMM} {DD}, {YYYY}')
 
-const HomePage = ({ posts }) => {
+const HomePage = () => {	
 	return (
 		<div>
 			<h1>Welcome to my blog!</h1>
 			<h2>Archives:</h2>
 			<ul>
 				{posts.map((post) => {
-					const frontmatter = post.data
+					const frontmatter = post.module.meta
 					return (
 						<li key={frontmatter.title}>
 							<article>
@@ -26,14 +27,14 @@ const HomePage = ({ posts }) => {
 									</dd>
 								</dl>
 								<h2>
-									<Link as={`blog/${post.slug}`} href={`blog/[slug]`}>
+									<Link href={`blog/${post.slug}`}>
 										<a>{frontmatter.title}</a>
 									</Link>
 								</h2>
 								<p>By {frontmatter.author}</p>
 								<p>{frontmatter.description}</p>
-								<Link as={`blog/${post.slug}`} href={`blog/[slug]`}>
-									<a>Read more →</a>
+								<Link href={`blog/${post.slug}`}>
+									<a>Read more &rarr;</a>
 								</Link>
 							</article>
 						</li>
@@ -42,22 +43,6 @@ const HomePage = ({ posts }) => {
 			</ul>
 		</div>
 	)
-}
-
-export const getStaticProps = () => {
-	const posts = blogFilePaths.map((filePath) => {
-		const split = filePath.split('/')
-		const slug = split[split.length - 2]
-		const source = fs.readFileSync(filePath)
-		const { content, data } = matter(source)
-		return {
-			slug,
-			content,
-			data,
-			filePath,
-		}
-	})
-	return { props: { posts } }
 }
 
 export default HomePage

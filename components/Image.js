@@ -1,3 +1,3 @@
 export const Image = ({ src, alt }) => (
-	<img style={{ backgroundColor: 'red' }} src={src} alt={alt} />
+	<img style={{border: '10px solid palevioletred', display: 'inline-block'}} src={src} alt={alt} />
 )
