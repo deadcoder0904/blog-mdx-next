@@ -7,11 +7,14 @@ import { formatDate } from '@/utils/date'
 
 const MDXComponents = { Image }
 
-const Blog = ({ blogs, meta, children }) => {
+const Tutorial = ({ tutorials, meta, children }) => {
 	const router = useRouter()
-	const blogIndex = blogs.findIndex((blog) => blog.slug === router.pathname.substr(6))
-	const previous = blogs[blogIndex + 1]
-	const next = blogs[blogIndex - 1]
+	console.log({ tutorial })
+	const tutorialIndex = tutorials.findIndex(
+		(tutorial) => tutorial.slug === router.pathname.substr(6)
+	)
+	const previous = tutorials[tutorialIndex + 1]
+	const next = tutorials[tutorialIndex - 1]
 
 	return (
 		<div>
@@ -48,11 +51,11 @@ const Blog = ({ blogs, meta, children }) => {
 			)}
 			<div className="pt-8">
 				<Link href="/">
-					<a>&larr; Back to the blog</a>
+					<a>&larr; Back to the tutorial</a>
 				</Link>
 			</div>
 		</div>
 	)
 }
 
-export default Blog
+export default Tutorial

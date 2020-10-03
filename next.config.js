@@ -52,6 +52,7 @@ module.exports = withBundleAnalyzer({
 					],
 				},
 				{
+					test: /blog/,
 					use: [
 						...mdx,
 						createLoader(function (src) {
@@ -62,7 +63,28 @@ module.exports = withBundleAnalyzer({
 								src,
 								'export default (props) => <Blog meta={meta} {...props} />',
 							].join('\n')
-							
+
+							if (content.includes('<!--more-->')) {
+								return this.callback(null, content.split('<!--more-->').join('\n'))
+							}
+
+							return this.callback(null, content.replace(/<!--excerpt-->.*<!--\/excerpt-->/s, ''))
+						}),
+					],
+				},
+				{
+					test: /tutorial/,
+					use: [
+						...mdx,
+						createLoader(function (src) {
+							const content = [
+								'import Tutorial from "@/components/Tutorial"',
+								'export { getStaticProps } from "@/utils/tutorial/getStaticProps"',
+								'export { getStaticPaths } from "@/utils/tutorial/getStaticPaths"',
+								src,
+								'export default (props) => <Tutorial meta={meta} {...props} />',
+							].join('\n')
+
 							if (content.includes('<!--more-->')) {
 								return this.callback(null, content.split('<!--more-->').join('\n'))
 							}

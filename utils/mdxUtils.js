@@ -1,5 +1,6 @@
 import glob from 'fast-glob'
 import path from 'path'
 
-export const BLOG_PATH = path.join(process.cwd(), 'pages')
-export const blogFilePaths = glob.sync(`${BLOG_PATH}/blog/**/*.mdx`)
+const PAGES_PATH = path.join(process.cwd(), 'pages')
+export const blogFilePaths = glob.sync(`${PAGES_PATH}/blog/**/*.mdx`)
+export const tutorialFilePaths = glob.sync(`${PAGES_PATH}/tutorial/**/*.mdx`)
