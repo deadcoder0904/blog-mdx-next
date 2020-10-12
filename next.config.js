@@ -41,6 +41,9 @@ module.exports = withBundleAnalyzer({
 					use: [
 						...mdx,
 						createLoader(function (src) {
+							console.log('src 👇')
+							console.log(src)
+							console.log('src 👆')
 							if (src.includes('<!--more-->')) {
 								const [preview] = src.split('<!--more-->')
 								return this.callback(null, preview)
@@ -60,6 +63,7 @@ module.exports = withBundleAnalyzer({
 								'import Blog from "@/components/Blog"',
 								'export { getStaticProps } from "@/utils/blog/getStaticProps"',
 								'export { getStaticPaths } from "@/utils/blog/getStaticPaths"',
+								'console.log("/blog")',
 								src,
 								'export default (props) => <Blog meta={meta} {...props} />',
 							].join('\n')
@@ -81,6 +85,7 @@ module.exports = withBundleAnalyzer({
 								'import Tutorial from "@/components/Tutorial"',
 								'export { getStaticProps } from "@/utils/tutorial/getStaticProps"',
 								'export { getStaticPaths } from "@/utils/tutorial/getStaticPaths"',
+								'console.log("/tutorial")',
 								src,
 								'export default (props) => <Tutorial meta={meta} {...props} />',
 							].join('\n')

@@ -1,4 +1,4 @@
-import { getAllTutorialPreviews } from '@/utils/blog/getAllTutorialPreviews'
+import { getAllTutorialPreviews } from '@/utils/tutorial/getAllTutorialPreviews'
 import { getStaticFileProps } from '@/utils/common/getStaticFileProps'
 
 export async function getStaticProps() {
