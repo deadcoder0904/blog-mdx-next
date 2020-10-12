@@ -1,26 +1,26 @@
 {
-  "name": "blog-mdx-remote",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "clean": "rimraf .next"
-  },
-  "dependencies": {
-    "@mdx-js/loader": "^1.6.17",
-    "@mdx-js/react": "^1.6.18",
-    "@mdx-js/runtime": "^1.6.18",
-    "@next/mdx": "^9.5.3",
-    "fast-glob": "^3.2.4",
-    "gray-matter": "^4.0.2",
-    "next": "^9.5.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "tinytime": "^0.2.6"
-  },
-  "devDependencies": {
-    "rimraf": "^3.0.2"
-  }
+	"name": "blog-mdx-remote",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev -p 4000",
+		"build": "next build",
+		"start": "next start",
+		"clean": "rimraf .next"
+	},
+	"dependencies": {
+		"@mdx-js/loader": "^1.6.17",
+		"@mdx-js/react": "^1.6.18",
+		"@next/mdx": "^9.5.3",
+		"fast-glob": "^3.2.4",
+		"gray-matter": "^4.0.2",
+		"next": "^9.5.3",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-markdown": "^4.3.1",
+		"tinytime": "^0.2.6"
+	},
+	"devDependencies": {
+		"rimraf": "^3.0.2"
+	}
 }

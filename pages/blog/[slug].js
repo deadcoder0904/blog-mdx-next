@@ -2,10 +2,9 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { MDXProvider } from '@mdx-js/react'
-import MDX from '@mdx-js/runtime'
-import { renderToStaticMarkup } from 'react-dom/server'
+import ReactMarkdown from 'react-markdown'
 
-import { BLOG_PATH, blogFilePaths } from '../../utils/mdxUtils'
+import { POSTS_PATH, blogFilePaths } from '../../utils/mdxUtils'
 import { Image } from '../../components/Image'
 
 const MDXComponents = { Image }
@@ -15,11 +14,7 @@ const Blog = ({ source, frontMatter }) => {
 		<div>
 			<h1>{frontMatter.title}</h1>
 			<MDXProvider components={MDXComponents}>
-				<div
-					dangerouslySetInnerHTML={{
-						__html: source,
-					}}
-				/>
+				<ReactMarkdown>{source}</ReactMarkdown>
 			</MDXProvider>
 		</div>
 	)
@@ -44,11 +39,10 @@ export async function getStaticPaths() {
 
 export const getStaticProps = async ({ params }) => {
 	const { slug } = params
-	const blogFilePath = path.join(BLOG_PATH, `/blog/${slug}/index.mdx`)
+	const blogFilePath = path.join(POSTS_PATH, `/blog/${slug}/index.mdx`)
 
 	const source = fs.readFileSync(blogFilePath)
 	const { content, data } = matter(source)
-	const mdx = renderToStaticMarkup(<MDX>{content}</MDX>)
 
 	if (!blogFilePath) {
 		console.warn('No MDX file found for slug')
@@ -56,7 +50,7 @@ export const getStaticProps = async ({ params }) => {
 
 	return {
 		props: {
-			source: mdx,
+			source: content,
 			frontMatter: data,
 		},
 	}
