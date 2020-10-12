@@ -1,3 +1,4 @@
+const path = require('path')
 const { createLoader } = require('simple-functional-loader')
 const rehypePrism = require('@mapbox/rehype-prism')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -55,7 +56,7 @@ module.exports = withBundleAnalyzer({
 					],
 				},
 				{
-					test: /blog/,
+					include: [path.resolve(__dirname, 'pages/blog')],
 					use: [
 						...mdx,
 						createLoader(function (src) {
@@ -77,7 +78,7 @@ module.exports = withBundleAnalyzer({
 					],
 				},
 				{
-					test: /tutorial/,
+					include: [path.resolve(__dirname, 'pages/tutorial')],
 					use: [
 						...mdx,
 						createLoader(function (src) {

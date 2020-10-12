@@ -9,10 +9,9 @@ const MDXComponents = { Image }
 
 const Tutorial = ({ tutorials, meta, children }) => {
 	const router = useRouter()
-	console.log({ tutorial })
-	const tutorialIndex = tutorials.findIndex(
-		(tutorial) => tutorial.slug === router.pathname.substr(6)
-	)
+	const tutorialIndex =
+		tutorials.length > 1 &&
+		tutorials.findIndex((tutorial) => tutorial.slug === router.pathname.substr(6))
 	const previous = tutorials[tutorialIndex + 1]
 	const next = tutorials[tutorialIndex - 1]
 

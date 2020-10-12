@@ -9,7 +9,8 @@ const MDXComponents = { Image }
 
 const Blog = ({ blogs, meta, children }) => {
 	const router = useRouter()
-	const blogIndex = blogs.findIndex((blog) => blog.slug === router.pathname.substr(6))
+	const blogIndex =
+		blogs.length > 1 && blogs.findIndex((blog) => blog.slug === router.pathname.substr(6))
 	const previous = blogs[blogIndex + 1]
 	const next = blogs[blogIndex - 1]
 
