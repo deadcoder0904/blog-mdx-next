@@ -42,9 +42,6 @@ module.exports = withBundleAnalyzer({
 					use: [
 						...mdx,
 						createLoader(function (src) {
-							console.log('src 👇')
-							console.log(src)
-							console.log('src 👆')
 							if (src.includes('<!--more-->')) {
 								const [preview] = src.split('<!--more-->')
 								return this.callback(null, preview)
